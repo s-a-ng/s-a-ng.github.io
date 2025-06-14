@@ -4,139 +4,343 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --text-color: #212529;
+            --subtle-text-color: #6c757d;
+            --accent-color: #007bff;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --shadow-hover-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
+            padding: 0;
         }
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-            margin-bottom: 40px;
-        }
-        main {
-            max-width: 800px;
+
+        .container {
+            max-width: 1100px;
             margin: 0 auto;
+            padding: 50px 20px;
         }
-        .project {
-            background-color: #fff;
-            margin-bottom: 40px;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        header {
+            text-align: center;
+            margin-bottom: 70px;
         }
-        .project img {
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--subtle-text-color);
+            margin: 0;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        @media (min-width: 992px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .project-card {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px var(--shadow-hover-color);
+        }
+
+        .project-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .project-card p {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            flex-grow: 1; 
+        }
+
+        .project-card .description {
+            margin-bottom: 20px;
+        }
+        
+        .media-container, .image-gallery {
+            margin-bottom: 20px;
+        }
+
+        .media-container img,
+        .media-container video {
             max-width: 100%;
             height: auto;
+            border-radius: 8px;
+            display: block;
         }
-        .ascii-art {
-            font-family: monospace;
-            white-space: pre;
-            font-size: 12px;
-            line-height: 1.2;
+        
+        .image-gallery {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
+        .image-gallery img {
+            flex: 1 1 calc(50% - 5px); 
+            min-width: 150px;
+        }
+
+        /* Responsive video wrapper to maintain aspect ratio */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .video-wrapper iframe,
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .project-links {
+            margin-top: auto; 
+            padding-top: 15px;
+        }
+
+        .project-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 20px;
+            transition: color 0.2s ease;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
         footer {
-            margin-top: 40px;
             text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: #fff;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--subtle-text-color);
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="ascii-art">
-            portfolio
-            Programming Languages used: JavaScript, Python, Rust, Lua
-        </div>
-    </header>
-    <main>
 
-        <section class="project">
-            <h2>JONSWAP + TMA Adjustments FFT Ocean</h2>
-           <iframe width="560" height="315" src="https://www.youtube.com/embed/trgPvEnzm-E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <p>128x128 resolution in real time. Created for in-development game "EXFIL."</p>
-        </section>
-        <section class="project">
-            <h2>Realistic Character System</h2>
-            <a href="https://gyazo.com/86a9c69ad9939613afa559b3851282e5">
-                <img src="https://i.gyazo.com/86a9c69ad9939613afa559b3851282e5.gif"/>
-            </a>
-            <p>2 iterations of this system, 3.5 months work total. Created for in-development game "EXFIL."</p>
-        </section>
+    <div class="container">
+        <header>
+            <h1>Portfolio</h1>
+            <p class="subtitle">JavaScript, Python, Rust, Lua</p>
+        </header>
 
-        <section class="project">
-            <h2>Optimized NPC Animator Replacment</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/-yFHasRWKlE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <p>In the video, I am able to run 700 concurrent animated characters at once. This would simply not be possible with the solution roblox by default provides. This animator replacement additionally implements Root Motion (The roblox animator does not have this). Created for in-development game "EXFIL."</p>
-        </section>
-        
-        <section class="project">
-            <h2>In-House Networking Library</h2>
-            <p>The networking library contains an aggressive serializer that is able to efficiently serialize dynamic payloads fast, whilst keeping size at an impressive low. Our Network library also implements an RSA handshake combined with XChaCha20 encryption. Developed for "EXFIL".</p>
-        </section>
-        <section class="project">
-            <h2>Automatic Roblox Map Upscaler</h2>
-            <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/before1.png">
-            <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/after1.png">
-            <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/before2.png">
-            <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/after2.png">
-            <p>This tool was created to refurbish an existing map we had while developing "EXFIL".</p>
-        </section>
-        <section class="project">
-            <h2>Anniversary Gift</h2>
-            <iframe width="640" height="360" style="border: none;" src="https://medal.tv/clip/i1hKPxUGMfDMAAB4U/vphXBsU6D?invite=cr-MSxCTlgsMjU5NjMzOTY1LA" allow="autoplay" allowfullscreen></iframe>
-            <p>This was an anniversary gift in the form of a Roblox game completed over the course of 1 month for a close friend. I handled all the programming. </p>
-            <p>Game Link: https://www.roblox.com/games/17751251403/Va-lours-Place-06062024-1#!/about</p>
-        </section>
-        <section class="project">
-            <h2>Controllable Stream of Computer inside Roblox</h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JVjtbDG8tlI?si=VrooyqB8oBGqlPnY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <p>Underlying video rendering system can render videos at 384x216 resolution when preloaded comfortably at 30 fps on a regular device. When streaming, resolution and fps are lowered. Videos are processed into a custom format optimized for rendering in Roblox. Backend written in Rust and Python.</p>
-            <p>Game Link: https://www.roblox.com/games/14892010260/ROBLOX-VIRTUAL-MACHINE (Server may be down)</p>
-        </section>
-        <section class="project">
-            <h2>Distributed Roblox Client Botnet</h2>
-            <a href="https://gyazo.com/d6fc619ab81bd99b0f56806029984ffe">
-                <img src="https://i.gyazo.com/d6fc619ab81bd99b0f56806029984ffe.gif"/>
-            </a>
-            <a href="https://gyazo.com/c70d674bfde558c676e688de22b61e3c">
-                <img src="https://i.gyazo.com/c70d674bfde558c676e688de22b61e3c.gif"/>
-            </a>
-            <img src="https://media.discordapp.net/attachments/988287959998558219/1066289846622093352/image.png?ex=66b68b8e&is=66b53a0e&hm=a9ff29457f973f1a1e6aebd28e8bdc059d803cb13c32e161f04fea8735e30c99&=&format=webp&quality=lossless&width=1253&height=700">
-            <p>This system ran multiple game client instances across a variable number of servers and controlled them all from a centralized point. A precursor to this system ran the clients on-device. API Example here: https://gist.github.com/s-a-ng/fa97b442573a0d8e518514408ac71d28</p>
-        </section>
-        <section class="project">
-            <h2>GPT-4 Vision Powered Computer Autopilot</h2>
-            <p>This program allowed GPT-4 to automate tasks on your computer, using its vision functionality.</p>
-        </section>
-        <section class="project">
-            <h2>Immersive and Realistic AI NPC System</h2>
-            <a href="https://gyazo.com/78962a6e59abb9b608e6bf5686fff9f7">
-                <img src="https://i.gyazo.com/78962a6e59abb9b608e6bf5686fff9f7.gif"/>
-            </a>
-            <p>This system was created during the Roblox Creator Game Jam 2024 event. Reactions are dynamic and depend on input from user. They are not preprogrammed.</p>
-        </section>
-        <section class="project">
-            <h2>AI Powered Admin Commands</h2>
-            <video width="640" height="360" controls>
-                <source src="https://cdn.medal.tv/ugcc/content-concat/W9nPViyhKmtBSIw_W1zEaw.mp4?auth=exp=1723206600~hmac=aec4b63513e6675b305dc191b4b4bacac2fc68f5fd2f03bf4611a0a063aa7f7a" type="video/mp4">
-            </video>
-            <p>The AI is aware of the game world and can respond to visual descriptions of objects. Clip recorded by friend.</p>
-        </section>
-        <section class="project">
-            <h2>ElevenLabs Powered Real-Time Voice Changer</h2>
-            <p>This program uses ElevenLabs' Speech To Speech feature to convincingly modify your voice in communication software like Discord. https://github.com/s-a-ng/elevenlabs-voicechanger </p>
-        </section>
-    </main>
-    <footer>
-        <p>Discord: sa__ng</p>
-    </footer>
+        <main class="portfolio-grid">
+
+
+            <article class="project-card">
+                <h2>JONSWAP + TMA Adjustments FFT Ocean</h2>
+                <div class="media-container">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/trgPvEnzm-E" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <p class="description">
+                    A 128x128 resolution ocean simulation running in real time. Created for the in-development game "EXFIL."
+                </p>
+            </article>
+            
+
+            <article class="project-card">
+                <h2>Realistic Character System</h2>
+                <div class="media-container">
+                    <a href="https://gyazo.com/86a9c69ad9939613afa559b3851282e5" target="_blank" rel="noopener noreferrer">
+                        <img src="https://i.gyazo.com/86a9c69ad9939613afa559b3851282e5.gif" alt="Realistic Character System Demo">
+                    </a>
+                </div>
+                <p class="description">
+                    Two iterations of this system developed over 3.5 months. Created for the in-development game "EXFIL."
+                </p>
+            </article>
+
+
+            <article class="project-card">
+                <h2>Optimized NPC Animator Replacement</h2>
+                <div class="media-container">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/-yFHasRWKlE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <p class="description">
+                    Able to run 700 concurrent animated characters, far exceeding the default Roblox solution. This replacement also implements Root Motion. Created for "EXFIL."
+                </p>
+            </article>
+
+
+            <article class="project-card">
+                <h2>In-House Networking Library</h2>
+                <p class="description">
+                    Features an aggressive serializer for efficient, fast, and low-size dynamic payloads. It also implements an RSA handshake combined with XChaCha20 encryption. Developed for "EXFIL".
+                </p>
+            </article>
+
+            <!-- Project Card: Map Upscaler -->
+            <article class="project-card">
+                <h2>Automatic Roblox Map Upscaler</h2>
+                <div class="media-container image-gallery">
+                    <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/before1.png" alt="Map Before Upscaling">
+                    <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/after1.png" alt="Map After Upscaling">
+                    <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/before2.png" alt="Map Before Upscaling 2">
+                    <img src="https://raw.githubusercontent.com/s-a-ng/s-a-ng.github.io/main/after2.png" alt="Map After Upscaling 2">
+                </div>
+                <p class="description">
+                    A tool created to refurbish an existing map during the development of "EXFIL".
+                </p>
+            </article>
+
+
+            <article class="project-card">
+                <h2>Anniversary Gift Game</h2>
+                <div class="media-container">
+                    <div class="video-wrapper">
+                        <iframe src="https://medal.tv/clip/i1hKPxUGMfDMAAB4U/vphXBsU6D?autoplay=1&muted=1" title="Anniversary Game Clip" allow="autoplay" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <p class="description">
+                    A Roblox game completed in one month as an anniversary gift for a close friend. All programming was handled by me.
+                </p>
+                <div class="project-links">
+                    <a href="https://www.roblox.com/games/17751251403/Va-lours-Place-06062024-1" target="_blank" rel="noopener noreferrer">Play on Roblox</a>
+                </div>
+            </article>
+
+
+            <article class="project-card">
+                <h2>Controllable Computer Stream in Roblox</h2>
+                 <div class="media-container">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/JVjtbDG8tlI" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <p class="description">
+                    Renders preloaded videos at 384x216 & 30 FPS. The backend is written in Rust and Python, using a custom video format optimized for Roblox.
+                </p>
+                <div class="project-links">
+                    <a href="https://www.roblox.com/games/14892010260/ROBLOX-VIRTUAL-MACHINE" target="_blank" rel="noopener noreferrer">Play on Roblox (Server may be down)</a>
+                </div>
+            </article>
+
+            <!-- Project Card: Roblox Botnet -->
+            <article class="project-card">
+                <h2>Distributed Roblox Client Botnet</h2>
+                <div class="media-container image-gallery">
+                     <img src="https://i.gyazo.com/d6fc619ab81bd99b0f56806029984ffe.gif" alt="Botnet Demo 1">
+                     <img src="https://i.gyazo.com/c70d674bfde558c676e688de22b61e3c.gif" alt="Botnet Demo 2">
+                </div>
+                <p class="description">
+                    This system ran and controlled multiple game client instances across a variable number of servers from a centralized point.
+                </p>
+                <div class="project-links">
+                    <a href="https://gist.github.com/s-a-ng/fa97b442573a0d8e518514408ac71d28" target="_blank" rel="noopener noreferrer">View API Example</a>
+                </div>
+            </article>
+            
+
+            <article class="project-card">
+                <h2>Immersive and Realistic AI NPC System</h2>
+                <div class="media-container">
+                     <a href="https://gyazo.com/78962a6e59abb9b608e6bf5686fff9f7" target="_blank" rel="noopener noreferrer">
+                        <img src="https://i.gyazo.com/78962a6e59abb9b608e6bf5686fff9f7.gif" alt="Immersive AI NPC Demo">
+                    </a>
+                </div>
+                <p class="description">
+                    Created during the Roblox Creator Game Jam 2024. NPC reactions are dynamic and generated based on user input, not pre-programmed.
+                </p>
+            </article>
+
+
+            <article class="project-card">
+                <h2>AI Powered Admin Commands</h2>
+                <div class="media-container">
+                    <div class="video-wrapper">
+                       <video controls muted poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" >
+                           <source src="https://cdn.medal.tv/ugcc/content-concat/W9nPViyhKmtBSIw_W1zEaw.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                       </video>
+                    </div>
+                </div>
+                <p class="description">
+                    The AI is aware of the game world and can respond to visual descriptions of objects. Clip recorded by a friend.
+                </p>
+            </article>
+
+
+            <article class="project-card">
+                <h2>GPT-4 Vision Powered Computer Autopilot</h2>
+                <p class="description">
+                    This program allowed GPT-4 to automate tasks on a computer by using its vision functionality to see the screen and control the mouse/keyboard.
+                </p>
+            </article>
+            
+
+            <article class="project-card">
+                <h2>ElevenLabs Powered Real-Time Voice Changer</h2>
+                <p class="description">
+                    This program uses the ElevenLabs Speech-to-Speech feature to convincingly modify your voice in real-time for communication software like Discord.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/s-a-ng/elevenlabs-voicechanger" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                </div>
+            </article>
+
+        </main>
+
+        <footer>
+            <p>Contact on Discord: sa__ng</p>
+        </footer>
+    </div>
+
 </body>
 </html>
